@@ -30,14 +30,15 @@ class MoviesController < ApplicationController
     else
       @ratings = nil
     
-    if @sort_by && @ratings
-      @movies = Movie.where(:rating => @ratings.keys).order(@sort_by).all
-    elsif @sort_by
+    # if @sort_by && @ratings
+    #   @movies = Movie.where(:rating => @ratings.keys).order(@sort_by).all
+    # els
+    if @sort_by
       @movies = Movie.order(@sort_by).all
-    elsif @ratings
-      @movies = Movie.where(:rating => @ratings.keys)
-    else
-      @movies = Movie.all
+    # elsif @ratings
+    #   @movies = Movie.where(:rating => @ratings.keys)
+    # else
+    #   @movies = Movie.all
     end
     
   end
