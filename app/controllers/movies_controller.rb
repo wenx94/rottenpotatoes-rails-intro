@@ -22,13 +22,13 @@ class MoviesController < ApplicationController
       @sort_by = nil
     end
     
-    if params[:ratings]
-      @ratings = params[:ratings]
-      session[:ratings] = params[:ratings]
-    elsif session[:ratings]
-      @ratings = session[:ratings]
-    else
-      @ratings = nil
+    # if params[:ratings]
+    #   @ratings = params[:ratings]
+    #   session[:ratings] = params[:ratings]
+    # elsif session[:ratings]
+    #   @ratings = session[:ratings]
+    # else
+    #   @ratings = nil
     
     # if @sort_by && @ratings
     #   @movies = Movie.where(:rating => @ratings.keys).order(@sort_by).all
