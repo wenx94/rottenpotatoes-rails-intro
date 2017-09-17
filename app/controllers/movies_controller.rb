@@ -13,6 +13,8 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all
     @all_ratings = Movie.all_ratings
+    @sorted = params[:sort] || session[:sort]
+    @checked = params[:ratings]
     
     if params[:sort]
       @sort_by = params[:sort]
