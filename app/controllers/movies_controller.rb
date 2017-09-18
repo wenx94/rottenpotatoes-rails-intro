@@ -47,7 +47,7 @@ class MoviesController < ApplicationController
     end
     
     if params[:ratings]
-      @filter = params[ratings]
+      @filter = params[:ratings]
       session[:ratings] = params[:ratings]
     elsif session[:ratings]
       @filter = session[:ratings]
