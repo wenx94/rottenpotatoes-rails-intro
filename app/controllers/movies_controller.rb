@@ -35,14 +35,14 @@ class MoviesController < ApplicationController
       @filter = nil
     end
     
-    if params[:ratings]
-      @filter = params[:ratings]
-      session[:ratings] = params[:ratings]
-    elsif session[:ratings]
-      @filter = session[:ratings]
-    else
-      @filter = nil
-    end
+    # if params[:ratings]
+    #   @filter = params[:ratings]
+    #   session[:ratings] = params[:ratings]
+    # elsif session[:ratings]
+    #   @filter = session[:ratings]
+    # else
+    #   @filter = nil
+    # end
     
     # if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
     #   session[:sort] = @sort_by
