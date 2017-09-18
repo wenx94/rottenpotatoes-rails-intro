@@ -41,16 +41,23 @@ class MoviesController < ApplicationController
       redirect_to :sort => @sort_by, :ratings => @filter and return
     end
     
-    
-    if @sort_by and @filter
-      @movies = Movie.where(:rating => @filter.keys).order(@sort_by).all
-    elsif @sort_by
-      @movies = Movie.order(@sort_by).all
-    elsif @filter
-      @movies = Movie.where(:rating => @filter.keys)
-    else
-      @movies = Movie.all
+    if !(@sort_by.nil?) 
+      @movies = @movies.order(@sort_by).all
     end
+    if !(@filter.nil?)
+      @movies = @movies.where(:rating => @filter.keys)
+    end
+    
+    
+    # if @sort_by and @filter
+    #   @movies = Movie.where(:rating => @filter.keys).order(@sort_by).all
+    # elsif @sort_by
+    #   @movies = Movie.order(@sort_by).all
+    # elsif @filter
+    #   @movies = Movie.where(:rating => @filter.keys)
+    # else
+    #   @movies = Movie.all
+    # end
     
   end
 
