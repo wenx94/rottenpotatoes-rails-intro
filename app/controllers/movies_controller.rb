@@ -28,20 +28,40 @@ class MoviesController < ApplicationController
       @sort_by = nil
     end
     
-    if params[:ratings]
-      @ratings = params[:ratings]
+    if params[:commit] == "Refresh" and params[:ratings].nil?
+      @filter = nil
+      session[:ratings] = nil
+    elsif params[:ratings].nil
+      @filter = params[:ratings]
       session[:ratings] = params[:ratings]
     elsif session[:ratings]
-      @ratings = session[:ratings]
+      @filter = session[:ratings]
     else
-      @ratings = nil
+      @filter = nil
+    end
     
-    if @sort_by && @ratings
-      @movies = Movie.where(:rating => @ratings.keys).order(@sort_by).all
+    if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
+      session[:sort] = @sort_by
+      session[:ratings] = @filter
+      redirect_to :sort => @sort_by, :ratings => @filter and return
+    end
+    
+    if params[:ratings]
+      @filter = params[ratings]
+      session[:ratings] = params[:ratings]
+    elsif session[:ratings]
+      @filter = session[:ratings]
+    else
+      @filter = nil
+    end
+    
+    
+    if @sort_by and @filter
+      @movies = Movie.where(:rating => @filter.keys).order(@sort_by).all
     elsif @sort_by
       @movies = Movie.order(@sort_by).all
-    elsif @ratings
-      @movies = Movie.where(:rating => @ratings.keys)
+    elsif @filter
+      @movies = Movie.where(:rating => @filter.keys)
     else
       @movies = Movie.all
     end
