@@ -13,12 +13,12 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all
     @all_ratings = Movie.all_ratings
-    @sorted = params[:sort] || session[:sort]
+    @sorted = params[:sort] or session[:sort]
     
-    if params[:sort]
+    if !(params[:sort].nil?)
       @sort_by = params[:sort]
       session[:sort] = params[:sort]
-    elsif session[:sort]
+    elsif !(session[:sort].nil?)
       @sort_by = session[:sort]
     else 
       @sort_by = nil
@@ -26,29 +26,20 @@ class MoviesController < ApplicationController
     
     if params[:commit] == "Refresh" and params[:ratings].nil?
       @filter = session[:ratings]
-    elsif params[:ratings]
+    elsif !(params[:ratings].nil?)
       @filter = params[:ratings]
       session[:ratings] = params[:ratings]
-    elsif session[:ratings]
+    elsif !(session[:ratings].nil?)
       @filter = session[:ratings]
     else
       @filter = nil
     end
     
-    # if params[:ratings]
-    #   @filter = params[:ratings]
-    #   session[:ratings] = params[:ratings]
-    # elsif session[:ratings]
-    #   @filter = session[:ratings]
-    # else
-    #   @filter = nil
-    # end
-    
-    # if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
-    #   session[:sort] = @sort_by
-    #   session[:ratings] = @filter
-    #   redirect_to :sort => @sort_by, :ratings => @filter and return
-    # end
+    if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
+      session[:sort] = @sort_by
+      session[:ratings] = @filter
+      redirect_to :sort => @sort_by, :ratings => @filter and return
+    end
     
     
     if @sort_by and @filter
