@@ -15,10 +15,6 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
     @sorted = params[:sort] || session[:sort]
     
-    if !(params[:ratings])
-      session[:checked] = params[:ratings]
-    end
-    
     if params[:sort]
       @sort_by = params[:sort]
       session[:sort] = params[:sort]
@@ -40,12 +36,6 @@ class MoviesController < ApplicationController
       @filter = nil
     end
     
-    if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
-      session[:sort] = @sort_by
-      session[:ratings] = @filter
-      redirect_to :sort => @sort_by, :ratings => @filter and return
-    end
-    
     if params[:ratings]
       @filter = params[:ratings]
       session[:ratings] = params[:ratings]
@@ -54,6 +44,12 @@ class MoviesController < ApplicationController
     else
       @filter = nil
     end
+    
+    # if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
+    #   session[:sort] = @sort_by
+    #   session[:ratings] = @filter
+    #   redirect_to :sort => @sort_by, :ratings => @filter and return
+    # end
     
     
     if @sort_by and @filter
